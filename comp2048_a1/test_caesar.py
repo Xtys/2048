@@ -12,7 +12,7 @@ import string
 
 letters = string.ascii_letters #contains 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-message = "WHERE is Alfred our homie cyclone is he trolling us" #type your message here
+message = "let use Try another one" #type your message here
 print("Message:", message)
 
 #create the Caesar cypher
