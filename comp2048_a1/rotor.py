@@ -29,7 +29,7 @@ class Reflector(object):
         index = (index + shift)%26 # actual connector hit
 
         letter = self.wiring[index] # rotor letter generated
-        out = chr(ord('A')+(ord(letter) - ord('A') +26 - shift)%26) # actual output
+        out = chr(ord('A')+(ord(letter) - ord('A') +26 - shift) % 26) # actual output
         #return letter
         return out
 

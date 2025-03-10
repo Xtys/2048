@@ -2,7 +2,7 @@
 """
 Create and test an Enigma machine encryption and decoding machine
 
-This code is based on the implementation of the Enigma machine in Python 
+This code is based on the implementation of the Enigma machine in Python
 called pyEnigma by Christophe Goessen (initial author) and Cédric Bonhomme
 https://github.com/cedricbonhomme/pyEnigma
 
@@ -29,8 +29,26 @@ print("Encoded Message:", secret)
 #HINT: Reuse the code above to do it. You do not need to write a decrypt function.
 #INSERT CODE HERE
 
+#reset rotor
+engine = enigma.Enigma(rotor.ROTOR_Reflector_A, rotor.ROTOR_I,
+                                rotor.ROTOR_II, rotor.ROTOR_III, key="ABC",
+                                plugs="AA BB CC DD EE")
+
+#checking if same secreet message
+print("Encoded Message:", secret)
+decrypt = engine.encipher(secret)
+print("Message:", decrypt)
+
+
 #Part b)
 ShakesHorribleMessage = "Vxye ajgh D yf? Ptn uluo yjgco L ws nznde czidn. Bsj ccj qdbk qjph wpw ypxvu!"
 
 #Write code to decrypt message above
 #INSERT CODE HERE
+engine2 = enigma.Enigma(rotor.ROTOR_Reflector_A, rotor.ROTOR_I,
+                                rotor.ROTOR_II, rotor.ROTOR_III, key="SSC",
+                                plugs="AA BB CC DD EE")
+
+decrypt2 = engine2.encipher(ShakesHorribleMessage)
+
+print("Message:", decrypt2)
