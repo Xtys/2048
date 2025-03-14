@@ -79,64 +79,28 @@ end_time = time.time()
 duration = end_time - start_time
 
 print(f"Brute force attack completed in {round(duration,2)} seconds on AMD ryzen 7")
+# How long do you think it would’ve taken for a computer in the 1940s?!
+# Answer: By scaling 11,772 attempts at 1 second per attempt = 11,772 seconds.
+# Convert to hours: 11,772 / 3,600 ≈ 3.27 hours.
 
 
-#part e, 5 rotors
-# def shakes_enigma_upgrade(ShakesHorribleMessage, crib, crib_substring):
+## part e, 3 rotors, additional 2 more rotor
+# rotor = 5 * 4 * 3 = 60
+# There are 60 ways you can put in 3 rotors from a choice of 5
+# starting position of each rotors = 26 * 26 * 26 = 17,576
 
-#     alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+# plugboard = (26!/6! * 10! * 2^10) = 150 738 274 937 250
 
-#     #initialize counter
-#     counter = 0
+# total = 158 962 555 217 826 360 000
+# tatal ways can set enigma machine
 
-#     if not crib_substring:
-#         target = crib
-#     else:
-#         target = crib_substring
+# it uses a cheat sheet
 
-
-#     for rotor1 in alphabet:
-#         for rotor2 in alphabet:
-#             for rotor3 in alphabet:
-#                 for rotor4 in alphabet:
-#                     for rotor5 in alphabet:
-#                         key = f"{rotor1}{rotor2}{rotor3}{rotor4}{rotor5}"
-
-#                         #part d, counter
-#                         counter += 1
-#                         engine = enigma.Enigma(
-#                             rotor.ROTOR_Reflector_A,
-#                             rotor.ROTOR_I,
-#                             rotor.ROTOR_II,
-#                             rotor.ROTOR_III,
-#                             rotor.ROTOR_IV,
-#                             rotor.ROTOR_V,
-#                             key=key,
-#                             plugs="AA BB CC DD EE"
-#                         )
-#                 #Print the Decoded message
-#                         decrypted = engine.encipher(ShakesHorribleMessage)
-
-#                         if target in decrypted:
-#                             print(f"Found key: {key}")
-#                             print(f"Decrypted message: {decrypted}")
-#                             print(counter)
-#                                     #else increase counter, by the process of elimination
-#                                     # If crib_substring was used, also check full crib
-#                             if crib_substring and crib in decrypted:
-#                                 print(f"Full crib '{crib}' also matches!")
-#                                 return decrypted
-
-#     print("No key found with this rotor setup.")
-#     return None, None
-
-# #part d,  add timer
-# start = time.time()
-
-# key, decrypted = shakes_enigma_upgrade(ShakesHorribleMessage, crib, crib_substring)
-
-# end= time.time()
-
-# duration2 = end - start
-
-# print(f"Brute force attack completed in {round(duration2,2)} seconds on AMD ryzen 7")
+# Cracking time estimate on AMD Ryzen 7:
+# Original attempts: 11,772, time: 10.77 seconds
+# New configurations: 158,962,555,217,826,360,000 / 17,576 ≈ 9.04 * 10^15 times more
+# New attempts (scaled): 11,772 * 9.04 * 10^15 ≈ 1.06 * 10^17 attempts
+# Time per attempt: 10.77 / 11,772 ≈ 0.000915 seconds
+# Total time: 1.06 * 10^17 * 0.000915 ≈ 9.7 * 10^13 seconds
+# Convert to years: 9.7 * 10^13 / (365 * 24 * 60 * 60) ≈ 3,075 years
+# Compared to 10.77 seconds, cracking would take approximately 3,075 years longer.
