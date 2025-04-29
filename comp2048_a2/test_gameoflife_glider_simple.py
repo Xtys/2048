@@ -19,11 +19,11 @@ cells = life.getStates() #initial state
 
 #evolve once
 life.evolve()
-cellsUpdated1 = life.getStates()
+cellsUpdated1 = life.getStates().copy()
 
 #evolve twice
 life.evolve()
-cellsUpdated2 = life.getStates()
+cellsUpdated2 = life.getStates().copy()
 
 #-------------------------------
 #plot cells
