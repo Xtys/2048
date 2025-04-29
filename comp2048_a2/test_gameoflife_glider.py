@@ -13,7 +13,8 @@ N = 64
 #create the game of life object
 life = conway.GameOfLife(N)
 #life.insertBlinker((0,0))
-life.insertGlider((0,0))
+# life.insertGlider((0,0))
+life.insertGliderGun((0,0))
 cells = life.getStates() #initial state
 
 #-------------------------------
@@ -30,12 +31,12 @@ img = plt.imshow(cells, animated=True)
 def animate(i):
     """perform animation step"""
     global life
-    
+
     life.evolve()
     cellsUpdated = life.getStates()
-    
+
     img.set_array(cellsUpdated)
-    
+
     return img,
 
 interval = 200 #ms
