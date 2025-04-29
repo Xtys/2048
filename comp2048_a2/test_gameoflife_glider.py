@@ -13,7 +13,10 @@ N = 64
 #create the game of life object
 life = conway.GameOfLife(N)
 #life.insertBlinker((0,0))
+# part B
 # life.insertGlider((0,0))
+
+# part C
 life.insertGliderGun((0,0))
 cells = life.getStates() #initial state
 

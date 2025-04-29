@@ -12,6 +12,7 @@ import numpy as np
 from scipy import signal
 import rle
 
+
 class GameOfLife:
     '''
     Object for computing Conway's Game of Life (GoL) cellular machine/automata
@@ -51,6 +52,8 @@ class GameOfLife:
         N = self.grid.shape[0]
         new_grid = np.zeros_like(self.grid)
 
+
+
         for y in range(N):
             for x in range(N):
                 # Count live neighbors (8 surrounding cells: up, down, left, right, diagonals)
@@ -88,6 +91,25 @@ class GameOfLife:
 
         #update the grid
         self.grid = new_grid
+
+    def evolve_fast(self):
+        '''
+        Evolve the current generation to the next using the rules of game of life
+        '''
+        # Define the kernel for counting neighbors (3x3 with center 0)
+        kernel = np.ones((3, 3), dtype=np.int64)
+        kernel[1, 1] = 0  # Exclude the center cell
+
+        # Compute weights (number of live neighbors) using convolution
+        weights = signal.convolve2d(self.grid, kernel, mode='same', boundary='wrap')
+
+        # Apply GoL rules using vectorized operations
+        newGrid = np.zeros_like(self.grid)
+        newGrid[(self.grid == self.aliveValue) & (weights == 2)] = self.aliveValue
+        newGrid[(self.grid == self.aliveValue) & (weights == 3)] = self.aliveValue
+        newGrid[(self.grid == self.deadValue) & (weights == 3)] = self.aliveValue
+
+        self.grid = newGrid
 
     def insertBlinker(self, index=(0,0)):
         '''
@@ -161,7 +183,41 @@ class GameOfLife:
         '''
         Assumes txtString contains the entire pattern as a human readable pattern without comments
         '''
+        # Split the string into rows
+        rows = txtString.strip().split('\n')
+        if not rows:
+            return  # Empty string, nothing to insert
 
+        # Filter out comment lines (starting with # or !)
+            pattern_rows = [row for row in rows if not row.startswith(('#', '!'))]
+            if not pattern_rows:
+                return  # No valid pattern rows after removing comments
+
+        # Determine pattern dimensions
+        num_rows = len(rows)
+        num_cols = max(len(row) for row in rows)  # Longest row determines width
+
+        # Grid dimensions
+        N = self.grid.shape[0]  # Assuming square grid (N x N)
+
+        # Insert pattern into grid starting at (pad, pad)
+        for i in range(num_rows):
+            row = rows[i]
+            for j in range(len(row)):
+                # Calculate grid position with padding
+                grid_y = pad + i
+                grid_x = pad + j
+
+                # Skip if position is outside grid bounds
+                if grid_y >= N or grid_x >= N:
+                    continue
+
+                # Map character to cell state
+                char = row[j]
+                if char in ('O', '*'):
+                    self.grid[grid_y, grid_x] = self.aliveValue
+                elif char in ('.', ' '):
+                    self.grid[grid_y, grid_x] = self.deadValue
 
 
     def insertFromRLE(self, rleString, pad=0):
