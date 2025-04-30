@@ -179,22 +179,52 @@ class GameOfLife:
         '''
         Assumes txtString contains the entire pattern as a human readable pattern without comments
         '''
-        # Split the pattern string into lines
-        lines = txtString.split('\n')
-        # Remove comment lines (starting with '!') and empty lines
-        rows = [line for line in lines if line and not line.startswith('!')]
-        if not rows:
-            return  # No valid rows
+        # Split the pattern into lines and strip whitespace
+        lines = [line.strip() for line in txtString.split("\n")]
+            # Skip comment lines (starting with '!'), empty lines, and lines that are just whitespace
+            # Also ensure lines only contain valid characters ('.' and 'O')
+        valid_lines = []
+        for line in lines:
+            if not line or line.startswith('!'):
+                continue
+            # Check if the line contains only valid characters
+            if all(char in '.O' for char in line):
+                valid_lines.append(line)
+            else:
+                print(f"Warning: Skipping invalid line in pattern file: '{line}'")
+
+        if not valid_lines:
+            print("Error: No valid pattern lines found in the file.")
+            return  # No valid lines to process
 
         # Determine the dimensions of the pattern
-        height = len(rows)
-        width = len(rows[0])
+        height = len(valid_lines)
+        width = max(len(line) for line in valid_lines)  # Use the longest line as the width
+
+        # Normalize lines by padding shorter ones with dead cells ('.')
+        normalized_lines = []
+        for line in valid_lines:
+            if len(line) < width:
+                line = line + '.' * (width - len(line))  # Pad with dead cells
+            normalized_lines.append(line)
+
+        # # Debugging: Print the dimensions and first few lines
+        # print(f"Pattern dimensions: {height}x{width}")
+        # print("First 5 lines of normalized pattern:")
+        # for i in range(min(5, len(normalized_lines))):
+        #     print(f"Line {i+1}: '{normalized_lines[i]}' (length: {len(normalized_lines[i])})")
 
         # Insert the pattern into the grid
         for i in range(height):
             for j in range(width):
-                if pad + i < self.N and pad + j < self.N:
-                    self.grid[pad + i, pad + j] = self.aliveValue if rows[i][j] == 'O' else self.deadValue
+                char = normalized_lines[i][j]
+                if char == 'O':
+                    self.grid[i + pad, j + pad] = self.aliveValue
+                elif char == '.':
+                    self.grid[i + pad, j + pad] = self.deadValue
+                else:
+                    # This should never happen with the validation above, but keep as a fallback
+                    self.grid[i + pad, j + pad] = self.deadValue
 
 
     def insertFromRLE(self, rleString, pad=0):
