@@ -5,7 +5,7 @@ import numpy as np
 N = 64
 life = conway.GameOfLife(N)
 
-# Pattern 1: Lightweight Spaceship (LWSS)
+# 1, Lightweight Spaceship (LWSS)
 lwss = """
 .O..O
 O....
@@ -26,7 +26,7 @@ plt.title("Lightweight Spaceship (LWSS) Pattern")
 # Reset grid for next pattern
 life.grid = np.zeros((N, N), np.int64)
 
-# Pattern 2: Lobster
+# 2: Lobster
 lobster = """
 ............OOO.........
 ............O...........
@@ -65,7 +65,7 @@ ax.set_yticks(np.arange(-.5, N, 1), minor=True)
 ax.grid(which='minor', color='w', linestyle='-', linewidth=1)
 plt.title("Lobster Pattern")
 
-# Reset grid for next pattern
+# Reset grid
 life.grid = np.zeros((N, N), np.int64)
 
 # Pattern 3: Loafer Synthesis

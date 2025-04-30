@@ -8,6 +8,7 @@ Created on Tue Jan 15 12:21:17 2019
 
 @author: shakes
 """
+from matplotlib.figure import figaspect
 import numpy as np
 from scipy import signal
 import rle
@@ -38,7 +39,7 @@ class GameOfLife:
         '''
         return self.getStates()
 
-    def evolve(self):
+    def evolve(self, fastMode=False):
         '''
         Given the current states of the cells, apply the GoL rules:
         - Any live cell with fewer than two live neighbors dies, as if by underpopulation.
@@ -48,10 +49,8 @@ class GameOfLife:
         '''
         #get weighted sum of neighbors
         #PART A & E CODE HERE
-
         N = self.grid.shape[0]
         new_grid = np.zeros_like(self.grid)
-
 
 
         for y in range(N):
@@ -77,7 +76,6 @@ class GameOfLife:
 
                 #implement the GoL rules by thresholding the weights
                 #PART A CODE HERE
-                # Apply GoL rules
                 if self.grid[y, x] == self.aliveValue:
                     if live_neighbors < 2:  # Underpopulation
                         new_grid[y, x] = self.deadValue
@@ -92,11 +90,11 @@ class GameOfLife:
         #update the grid
         self.grid = new_grid
 
-    def evolve_fast(self):
+    def evolve_two(self, fastMode=True):
         '''
         Evolve the current generation to the next using the rules of game of life
         '''
-        # Define the kernel for counting neighbors (3x3 with center 0)
+        # Define the kernel
         kernel = np.ones((3, 3), dtype=np.int64)
         kernel[1, 1] = 0  # Exclude the center cell
 
