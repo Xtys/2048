@@ -53,7 +53,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 
-# Configuration each pattern
+# Configuration for each pattern
 CONFIG = {
     'part_b': {
         'N': 64,

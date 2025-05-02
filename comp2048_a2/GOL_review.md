@@ -84,7 +84,48 @@ which is much faster for large grids.
 
 scipy.signal.convolve2d
 
+https://www.richard-stanton.com/2021/07/25/game-of-life.html
 
+With larger sized grids we could utilise fast Fourier transforms to compute the convolution using multiplication instead.
+
+https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.convolve2d.html
+
+it returns: real function
+
+A 2-dimensional array containing a subset of the discrete linear convolution of *in1* with *in2*.
+
+Alive or not (read from row first then column)
+
+     0  1  2  (col)
+  0 [0, 1, 0]
+  1 [0, 1, 0]
+  2 [0, 1, 0]
+(row)
+
+define kernel 
+
+[1, 1, 1]  → Top-left, top, top-right
+[1, 0, 1]  → Left, (center), right
+[1, 1, 1]  → Bottom-left, bottom, bottom-right
+
+calculations:
+
+Convolution for Cell [0, 0] (position)
+
+[-1, -1] [-1, 0] [-1, 1]
+[ 0, -1] [ 0, 0] [ 0, 1]
+[ 1, -1] [ 1, 0] [ 1, 1]
+
+output is the weights : 
+
+Kernel:         Grid values:
+1 1 1           0 0 1
+1 0 1           0 0 1
+1 1 1           0 0 1
+
+Multiply kernel by grid values element-wise
+
+0 + 0 + 1 + 0 + 0 + 1 + 0 + 0 + 1 = 3
 
 g) so this part, use the rle.RunLengthEncodedParser to parse the rleString from the RLE.py file
 
@@ -138,4 +179,34 @@ ref : http://rendell-attic.org/gol/tm.htm
 
 Here the Tape is the two stack 
 
-signal isconnect to FSM 
+signal is connect to FSM 
+
+**Gliders** (moving patterns) to carry signals (data or control).
+
+**Glider guns** to generate streams of gliders for timing or data.
+
+**Collision patterns** to implement logic (e.g., AND, OR, NOT gates or state changes).
+
+**Tracks** to guide gliders representing tape symbols or head position.
+
+---
+
+Halting Problem - Given a program (or algorithm) and an input, can we determine whether the program will halt (stop running) or run forever?
+
+any program attempting to predict halting can be constructed to contradict its own prediction (via a diagonalization argument).
+
+Turing Complete - do anything that a TM can do 
+
+1. conditional  branching - if statements or go to (occurs in FSM)
+
+   Conditional branching in a TM occurs in the transition function, where the next action (state, symbol, movement) depends on the current state and tape symbol. This is the “if-then” logic (e.g., “if state q1 and symbol 1, then do X; if symbol 0, do Y”).
+
+2. Arbitury amount of memory and space ( infinite tape)
+
+
+
+Bonus 
+
+Run-Length Encoding (RLE) is a text-based format used to represent patterns in Conway's Game of Life, a cellular automaton. It encodes the grid of live and dead cells into a compact string, making it easy to store, share, and load patterns.
+
+omitting unnecessary trailing dead cells.

@@ -59,7 +59,7 @@ class GameOfLife:
                 for dy in [-1, 0, 1]:  # Vertical up (-1), same (0), down (1)
                     for dx in [-1, 0, 1]:  # Horizontal left (-1), same (0), right (1)
                         if dy == 0 and dx == 0:
-                            continue  # center of 3x3 region
+                            continue
                         # Compute neighbor coordinates
                         ny, nx = y + dy, x + dx
                         # Handle boundaries based on self.finite
